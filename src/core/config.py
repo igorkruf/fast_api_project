@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, PostgresDsn
 from pydantic_settings import BaseSettings
 
 
@@ -9,10 +9,19 @@ class RunConfig(BaseModel):
 class RouterPrefix(BaseModel):
     api: str = "/api"
 
+class DatabaseConfig(BaseModel):
+    url:PostgresDsn
+    echo:bool = False,
+    echo_pool:bool = False,
+    max_overflow: int = 50,
+    pool_size: int = 10,
+    
+
 class Settings(BaseSettings):
     run: RunConfig = RunConfig()
     router_prefix: RouterPrefix = RouterPrefix()
-    pass
+    db: DatabaseConfig 
+    
 
 
 settings = Settings()
