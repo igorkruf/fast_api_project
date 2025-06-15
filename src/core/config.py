@@ -24,7 +24,7 @@ class Settings(BaseSettings):
         #  используется, чтобы избежать ошибок при загрузке .env, 
         # где есть настройки не только для FastAPI, но и для PostgreSQL и PGAdmin.
         # только что создал файл .env в папке src моего приложения 
-        # так- что параметр exstra можно удалить нол я оставил
+        # так- что параметр exstra можно удалить но я оставил
         extra='ignore', 
         case_sensitive=False,
         env_nested_delimiter="__",
