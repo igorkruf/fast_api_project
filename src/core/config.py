@@ -1,5 +1,5 @@
 from pydantic import BaseModel, PostgresDsn
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class RunConfig(BaseModel):
@@ -11,13 +11,26 @@ class RouterPrefix(BaseModel):
 
 class DatabaseConfig(BaseModel):
     url:PostgresDsn
-    echo:bool = False,
-    echo_pool:bool = False,
-    max_overflow: int = 50,
-    pool_size: int = 10,
+    echo:bool = False
+    echo_pool:bool = False
+    max_overflow: int = 50
+    pool_size: int = 10
     
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=('.env-template', '.env'),
+        env_file_encoding='utf-8',
+        #  используется, чтобы избежать ошибок при загрузке .env, 
+        # где есть настройки не только для FastAPI, но и для PostgreSQL и PGAdmin.
+        # только что создал файл .env в папке src моего приложения 
+        # так- что параметр exstra можно удалить нол я оставил
+        extra='ignore', 
+        case_sensitive=False,
+        env_nested_delimiter="__",
+        env_prefix="MY_APP_CONFIG__",
+
+    )
     run: RunConfig = RunConfig()
     router_prefix: RouterPrefix = RouterPrefix()
     db: DatabaseConfig 
@@ -25,3 +38,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+print(settings.db.url)
