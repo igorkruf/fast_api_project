@@ -30,6 +30,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${_PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${_PGADMIN_DEFAULT_PASSWORD}
       PGADMIN_PORT: 80 
+      
     ports:
       - ${_PGADMIN_LISTEN_PORT}:80
     volumes:
