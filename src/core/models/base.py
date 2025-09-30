@@ -1,5 +1,6 @@
 from core.config import settings 
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, UUID
+import uuid
 from sqlalchemy.orm import (
                             DeclarativeBase,
                             Mapped,
@@ -22,7 +23,8 @@ class Base(DeclarativeBase):
     def __tablename__(cls) -> str:
         return f"{camel_case_to_snake_case(cls.__name__)}s"
 
-    id: Mapped[int] = mapped_column(
+    id: Mapped[uuid.UUID] = mapped_column(
+                                    UUID,
                                     primary_key=True, 
-                                    autoincrement=True
+                                    default=uuid.uuid4
                                   )
